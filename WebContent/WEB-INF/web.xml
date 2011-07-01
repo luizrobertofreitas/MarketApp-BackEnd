@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>MarketApp-BackEnd</display-name>
+  
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:com/marketbe/config/spring/*-context.xml</param-value>
+  </context-param>
+  
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  
+  <listener>
+    <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+  </listener>
+  
+  <servlet>
+    <servlet-name>jersey</servlet-name>
+    <servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>jersey</servlet-name>
+    <url-pattern>/resources/*</url-pattern>
+  </servlet-mapping>
+  
+  <resource-ref>
+    <res-ref-name>
+  		jdbc/MarketAppJava
+  	</res-ref-name>
+    <res-type>
+  		javax.sql.DataSource
+  	</res-type>
+  </resource-ref>
+  <resource-ref>
+    <res-ref-name>
+  		mail/Admin
+  	</res-ref-name>
+    <res-type>
+  		javax.mail.Session
+  	</res-type>
+  </resource-ref>
+</web-app>
