@@ -9,9 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name="roles")
+@XmlRootElement
 @SuppressWarnings("serial")
 @NamedQueries(value = {
 	@NamedQuery(name="Role.findAll", query="SELECT r FROM Role r")
