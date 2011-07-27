@@ -1,6 +1,7 @@
 package com.marketbe.service.rest.impl;
 
 import java.util.Calendar;
+import java.util.Map;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -22,5 +23,12 @@ public class RolesResouceImpl implements RolesResource
 	{
 		return "Roles Resource is alive! " + Calendar.getInstance().getTime();
 	}
-
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("list")
+	public Map<String, Object> getAllRoles()
+	{
+		return null;
+	}
 }

@@ -28,14 +28,6 @@
   
   <resource-ref>
     <res-ref-name>
-  		jdbc/MarketAppJava
-  	</res-ref-name>
-    <res-type>
-  		javax.sql.DataSource
-  	</res-type>
-  </resource-ref>
-  <resource-ref>
-    <res-ref-name>
   		mail/Admin
   	</res-ref-name>
     <res-type>

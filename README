@@ -1,9 +1,0 @@
-Back End for Market Application
-
-This project uses the following technologies:
-
-Java EE 6
-JSR 311 - JAX-RS - REST services
-Spring 3.0.5 framework
-JPA 2.0
-Hibernate 3.6

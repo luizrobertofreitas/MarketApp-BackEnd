@@ -18,21 +18,18 @@
 	<context:annotation-config />
 
 	<tx:annotation-driven />
-	
-	<!-- Transaction configuration for EntityManagerFactory -->
-	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
-		  						  p:entityManagerFactory-ref="entityManagerFactory" />
-		  
-	<!-- Tomcat configured Datasource -->
-	<jee:jndi-lookup id="dataSource" jndi-name="jdbc/MarketAppJava"/>
-	
-	<!-- EntityManagerFactory injection - Hibernate ORM Library -->
+
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+				p:driverClassName="com.mysql.jdbc.Driver" 
+				p:url="jdbc:mysql://localhost:3306/market_app_java"
+				p:username="root" p:password="123456" />
+
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
-		  							p:dataSource-ref="dataSource"
-		  							p:persistenceUnitName="marketappjava">
-		<property name="jpaVendorAdapter">
-			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
-		</property>
-	</bean>
-	
+				p:dataSource-ref="dataSource" p:jpaVendorAdapter-ref="jpaAdapter" />
+		
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
+				p:entityManagerFactory-ref="entityManagerFactory" />
+				
+	<bean id="jpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
+				p:database="MYSQL" p:showSql="true" />
 </beans>
