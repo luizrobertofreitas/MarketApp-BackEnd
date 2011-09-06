@@ -13,6 +13,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 @Entity
 @Table(name="user_roles")
 @XmlRootElement
@@ -27,13 +29,11 @@ public class UserRoles implements Serializable
 	@GeneratedValue
 	private Integer id;
 	
-	@NotNull
-	@Size(min=5, max=50)
+	@NotBlank
 	@Column(name="username")
 	private String username;
 	
-	@NotNull
-	@Size(min=2, max=30)
+	@NotBlank
 	@Column(name="rolename")
 	private String rolename;
 	

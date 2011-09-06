@@ -9,9 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name="roles")
@@ -27,8 +27,7 @@ public class Role implements Serializable
 	@GeneratedValue
 	private Integer id;
 	
-	@NotNull
-	@Size(min=2, max=30)
+	@NotBlank
 	@Column(name="rolename")
 	private String rolename;
 	
