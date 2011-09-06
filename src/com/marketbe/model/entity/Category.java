@@ -9,7 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+
 
 @Entity
 @Table(name="categories")
@@ -22,12 +25,16 @@ public class Category implements Serializable
 {
 	@Id
 	@Column(name="id")
-	@GeneratedValue
+	@GeneratedValue	
 	private Integer id;
 	
+	@NotNull
+	@Size(min=3, max=80)
 	@Column(name="name")
 	private String name;
 	
+	@NotNull
+	@Size(min=5, max=400)
 	@Column(name="description")
 	private String description;
 	
