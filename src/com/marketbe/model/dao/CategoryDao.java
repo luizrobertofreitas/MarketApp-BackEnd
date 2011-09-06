@@ -17,6 +17,13 @@ public interface CategoryDao
 	public List<Category> findAllCategories();
 	
 	/**
+	 * @param firstPosition
+	 * @param numberOfRecords
+	 * @return List<Category>
+	 */
+	public List<Category> findAllCategoriesWithPagination(Integer firstPosition, Integer numberOfRecords);
+	
+	/**
 	 * @param Integer id
 	 * @return Category
 	 */

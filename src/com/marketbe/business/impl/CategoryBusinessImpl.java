@@ -88,6 +88,15 @@ public class CategoryBusinessImpl implements CategoryBusiness
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.marketbe.business.CategoryBusiness#getAllCategoriesWithPagination(java.lang.Integer, java.lang.Integer)
+	 */
+	@Override
+	public List<Category> getAllCategoriesWithPagination(Integer firstPosition, Integer maxResults)
+	{
+		return categoryDao.findAllCategoriesWithPagination(firstPosition, maxResults);
+	}
+	
 	/**
 	 * @param CategoryDao categoryDao
 	 */

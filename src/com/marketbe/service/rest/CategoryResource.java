@@ -16,6 +16,7 @@ public interface CategoryResource
 	 */
 	public String pingResource();
 	public CategoryJSONResult getAllCategories();
+	public CategoryJSONResult getAllCategoriesWithPagination(Integer firstPosition, Integer maxResults);
 	public CategoryJSONResult getCategoryById(Integer id);
 	public CategoryJSONResult saveCategory(String name, String description);
 	public CategoryJSONResult updateCategory(Integer id, String name, String description);

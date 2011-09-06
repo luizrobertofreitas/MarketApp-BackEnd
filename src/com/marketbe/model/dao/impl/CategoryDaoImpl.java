@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -97,5 +98,15 @@ public class CategoryDaoImpl implements CategoryDao
 	{
 		entityManager.merge(category);
 		return category;		
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Category> findAllCategoriesWithPagination(Integer firstPosition, Integer numberOfRecords)
+	{
+		Query query = entityManager.createNamedQuery("Category.findAll", Category.class);
+		query.setFirstResult(firstPosition);
+		query.setMaxResults(numberOfRecords);
+		return query.getResultList();
 	}
 }

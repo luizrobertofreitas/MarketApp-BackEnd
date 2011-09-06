@@ -1,7 +1,10 @@
 package com.marketbe.service.rest.impl;
 
 import java.util.Calendar;
+import java.util.Iterator;
+import java.util.Set;
 
+import javax.validation.ConstraintViolation;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -21,6 +24,7 @@ import com.marketbe.model.entity.Category;
 import com.marketbe.service.rest.CategoryResource;
 import com.marketbe.service.result.json.impl.CategoryJSONResult;
 import com.marketbe.util.Constants;
+import com.marketbe.util.ValidatorUtil;
 
 /**
  * @author junior
@@ -108,24 +112,24 @@ public class CategoryResourceImpl implements CategoryResource
 	{
 		CategoryJSONResult categories = new CategoryJSONResult();
 		
-		if(name == null || name.isEmpty() || description == null || description.isEmpty())
-		{
-			categories.setMessage("Error when creating Category, Name: " + name + " - Description: " + description);
-			categories.setMethod(Constants.POST);
-			categories.setStatus(Constants.FAILURE);
-		}
-		else
-		{
-			Category category = new Category();
-			category.setName(name);
-			category.setDescription(description);
+		Category category = new Category();
+		category.setName(name);
+		category.setDescription(description);
 			
+		if(ValidatorUtil.isValid(category, Category.class))
+		{
 			categoryBusiness.createCategory(category);
 			
 			categories.setMessage("Category was successfully created");
 			categories.setMethod(Constants.POST);
 			categories.setStatus(Constants.SUCCESS);
 			categories.setCategory(category);
+		}
+		else
+		{
+			categories.setMessage(ValidatorUtil.getErrorMessages(category, Category.class));
+			categories.setMethod(Constants.POST);
+			categories.setStatus(Constants.FAILURE);
 		}
 		
 		return categories;
@@ -143,36 +147,37 @@ public class CategoryResourceImpl implements CategoryResource
 	{
 		CategoryJSONResult categories = new CategoryJSONResult();
 		
-		if(id == null || name == null || name.isEmpty() || description == null || description.isEmpty())
-		{
-			categories.setMessage("Error when updating Category, ID: " + id + " - Name: " + name + " - Description: " + description);
-			categories.setMethod(Constants.PUT);
-			categories.setStatus(Constants.FAILURE);
-		}
-		else
-		{
-			Category category = categoryBusiness.getCategory(id);
+		Category category = categoryBusiness.getCategory(id);
 				
-			if(category != null)
+		if(category != null)
+		{
+			category.setName(name);
+			category.setDescription(description);
+			
+			if(ValidatorUtil.isValid(category, Category.class))
 			{
-				category.setName(name);
-				category.setDescription(description);
-					
+			
 				categoryBusiness.updateCategory(category);
 				
-				categories.setMessage("Category was successfully updated");
+				categories.setMessage(Constants.MESSAGE_SUCCESS_CATEGORY_UPDATE);
 				categories.setMethod(Constants.PUT);
 				categories.setStatus(Constants.SUCCESS);
 				categories.setCategory(category);
 			}
 			else
 			{
-				categories.setMessage("Error when updating Category, because the category was not found in the database");
+				categories.setMessage(ValidatorUtil.getErrorMessages(category, Category.class));
 				categories.setMethod(Constants.PUT);
 				categories.setStatus(Constants.FAILURE);				
 			}
 		}
-		
+		else
+		{
+			categories.setMessage(ValidatorUtil.getErrorMessages(category, Category.class));
+			categories.setMethod(Constants.PUT);
+			categories.setStatus(Constants.FAILURE);				
+		}
+
 		return categories;
 	}
 
@@ -189,7 +194,7 @@ public class CategoryResourceImpl implements CategoryResource
 		
 		if(id == null)
 		{
-			categories.setMessage("Error when removing the Category, ID: " + id);
+			categories.setMessage(Constants.MESSAGE_ERROR_INVALID_ID + id);
 			categories.setMethod(Constants.DELETE);
 			categories.setStatus(Constants.SUCCESS);
 		}
@@ -197,7 +202,7 @@ public class CategoryResourceImpl implements CategoryResource
 		{
 			categoryBusiness.deleteCategory(id);
 					
-			categories.setMessage("Category was successfully removed");
+			categories.setMessage(Constants.MESSAGE_SUCCESS_CATEGORY_DESTROY);
 			categories.setMethod(Constants.DELETE);
 			categories.setStatus(Constants.SUCCESS);
 			categories.setCategories(categoryBusiness.getAllCategories());
@@ -206,6 +211,35 @@ public class CategoryResourceImpl implements CategoryResource
 		return categories;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.marketbe.service.rest.CategoryResource#getAllCategoriesWithPagination(java.lang.Integer, java.lang.Integer)
+	 */
+	@GET
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("list/{firstPosition}/{maxResults}")
+	@Override
+	public CategoryJSONResult getAllCategoriesWithPagination(@PathParam("firstPosition") Integer firstPosition, @PathParam("maxResults") Integer maxResults)
+	{
+		CategoryJSONResult categories = new CategoryJSONResult();
+		
+		if((firstPosition != null && firstPosition != 0) && (maxResults != null && maxResults != 0))
+		{
+			categories.setMessage(Constants.MESSAGE_SUCCESS_CATEGORY_LIST);
+			categories.setMethod(Constants.GET);
+			categories.setStatus(Constants.SUCCESS);
+			categories.setCategories(categoryBusiness.getAllCategoriesWithPagination(firstPosition, maxResults));
+		}
+		else
+		{
+			categories.setMessage(Constants.MESSAGE_SUCCESS_CATEGORY_LIST);
+			categories.setMethod(Constants.GET);
+			categories.setStatus(Constants.SUCCESS);
+			categories.setCategories(categoryBusiness.getAllCategories());
+		}
+		
+		return categories;
+	}
+	
 	/**
 	 * Do not call this method. This is used by the Spring IoC Container
 	 * 

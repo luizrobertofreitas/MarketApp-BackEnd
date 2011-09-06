@@ -13,7 +13,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-
 @Entity
 @Table(name="categories")
 @XmlRootElement
