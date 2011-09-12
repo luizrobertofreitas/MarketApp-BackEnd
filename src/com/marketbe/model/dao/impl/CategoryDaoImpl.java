@@ -55,7 +55,7 @@ public class CategoryDaoImpl implements CategoryDao
 	@Override
 	public List<Category> findAllCategories()
 	{
-		return entityManager.createNamedQuery("Category.findAll", Category.class).getResultList();		
+		return getEntityManager().createNamedQuery("Category.findAll", Category.class).getResultList();		
 	}
 	
 	/* (non-Javadoc)
@@ -64,7 +64,7 @@ public class CategoryDaoImpl implements CategoryDao
 	@Override
 	public Category findById(Integer id)
 	{
-		return entityManager.find(Category.class, id);
+		return getEntityManager().find(Category.class, id);
 	}
 	
 	/* (non-Javadoc)
@@ -74,7 +74,7 @@ public class CategoryDaoImpl implements CategoryDao
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRES_NEW)
 	public Category createCategory(Category category)
 	{
-		entityManager.persist(category);
+		getEntityManager().persist(category);
 		return category;
 	}
 
@@ -85,8 +85,8 @@ public class CategoryDaoImpl implements CategoryDao
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRES_NEW)
 	public void deleteCategory(Integer id)
 	{
-		Category category = entityManager.find(Category.class, id);
-		entityManager.remove(category);
+		Category category = getEntityManager().find(Category.class, id);
+		getEntityManager().remove(category);
 	}
 
 	/* (non-Javadoc)
@@ -96,7 +96,7 @@ public class CategoryDaoImpl implements CategoryDao
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRES_NEW)
 	public Category updateCategory(Category category)
 	{
-		entityManager.merge(category);
+		getEntityManager().merge(category);
 		return category;		
 	}
 
@@ -104,7 +104,7 @@ public class CategoryDaoImpl implements CategoryDao
 	@Override
 	public List<Category> findAllCategoriesWithPagination(Integer firstPosition, Integer numberOfRecords)
 	{
-		Query query = entityManager.createNamedQuery("Category.findAll", Category.class);
+		Query query = getEntityManager().createNamedQuery("Category.findAll", Category.class);
 		query.setFirstResult(firstPosition);
 		query.setMaxResults(numberOfRecords);
 		return query.getResultList();

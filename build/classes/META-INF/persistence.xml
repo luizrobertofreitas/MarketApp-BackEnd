@@ -9,7 +9,9 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		
 		<class>com.marketbe.model.entity.Category</class>
+		<class>com.marketbe.model.entity.User</class>
 		<class>com.marketbe.model.entity.Role</class>
+		<class>com.marketbe.model.entity.UserRoles</class>
 		
 		<exclude-unlisted-classes />
 		

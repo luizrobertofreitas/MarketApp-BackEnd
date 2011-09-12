@@ -13,6 +13,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.marketbe.util.Constants;
+
 @Entity
 @Table(name="roles")
 @XmlRootElement
@@ -27,7 +29,7 @@ public class Role implements Serializable
 	@GeneratedValue
 	private Integer id;
 	
-	@NotBlank
+	@NotBlank(message="Role " + Constants.CANNOT_BE_BLANK)
 	@Column(name="rolename")
 	private String rolename;
 	

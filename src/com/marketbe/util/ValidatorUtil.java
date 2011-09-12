@@ -5,6 +5,8 @@ import java.util.Iterator;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
+import javax.validation.groups.Default;
+
 
 public final class ValidatorUtil
 {
@@ -12,34 +14,33 @@ public final class ValidatorUtil
 	
 	private ValidatorUtil(){}
 	
-	@SuppressWarnings("rawtypes")
-	public static Boolean isValid(Object entity, Class clazz)
+	public static Boolean isValid(Object entity)
 	{
-		if(validator.validate(entity, clazz).isEmpty())
+		if(validator.validate(entity, Default.class).isEmpty())
 		{
 			return true;
 		}
 		return false;
 	}
 	
-	@SuppressWarnings("rawtypes")
-	public static String getErrorMessages(Object entity, Class clazz)
+	public static String getErrorMessages(Object entity)
 	{
-		Iterator<ConstraintViolation<Object>> iterator = validator.validate(entity, clazz).iterator();
+		Iterator<ConstraintViolation<Object>> iterator = validator.validate(entity, Default.class).iterator();
 		
 		String messageObject = "";
 		
 		while(iterator.hasNext())
 		{
+			ConstraintViolation<Object> cv = iterator.next();
+			
 			if(iterator.hasNext())
 			{
-				messageObject += iterator.next().getMessage() + ":";
+				messageObject += cv.getMessage() + ":";
 			}
 			else
 			{
-				messageObject += iterator.next().getMessage();
+				messageObject += cv.getMessage();
 			}
-			
 		}
 		
 		return messageObject;

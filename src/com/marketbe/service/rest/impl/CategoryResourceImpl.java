@@ -1,10 +1,7 @@
 package com.marketbe.service.rest.impl;
 
 import java.util.Calendar;
-import java.util.Iterator;
-import java.util.Set;
 
-import javax.validation.ConstraintViolation;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -116,7 +113,7 @@ public class CategoryResourceImpl implements CategoryResource
 		category.setName(name);
 		category.setDescription(description);
 			
-		if(ValidatorUtil.isValid(category, Category.class))
+		if(ValidatorUtil.isValid(category))
 		{
 			categoryBusiness.createCategory(category);
 			
@@ -127,7 +124,7 @@ public class CategoryResourceImpl implements CategoryResource
 		}
 		else
 		{
-			categories.setMessage(ValidatorUtil.getErrorMessages(category, Category.class));
+			categories.setMessage(ValidatorUtil.getErrorMessages(category));
 			categories.setMethod(Constants.POST);
 			categories.setStatus(Constants.FAILURE);
 		}
@@ -154,7 +151,7 @@ public class CategoryResourceImpl implements CategoryResource
 			category.setName(name);
 			category.setDescription(description);
 			
-			if(ValidatorUtil.isValid(category, Category.class))
+			if(ValidatorUtil.isValid(category))
 			{
 			
 				categoryBusiness.updateCategory(category);
@@ -166,14 +163,14 @@ public class CategoryResourceImpl implements CategoryResource
 			}
 			else
 			{
-				categories.setMessage(ValidatorUtil.getErrorMessages(category, Category.class));
+				categories.setMessage(ValidatorUtil.getErrorMessages(category));
 				categories.setMethod(Constants.PUT);
 				categories.setStatus(Constants.FAILURE);				
 			}
 		}
 		else
 		{
-			categories.setMessage(ValidatorUtil.getErrorMessages(category, Category.class));
+			categories.setMessage(ValidatorUtil.getErrorMessages(category));
 			categories.setMethod(Constants.PUT);
 			categories.setStatus(Constants.FAILURE);				
 		}

@@ -54,7 +54,7 @@ public class RoleDaoImpl implements RoleDao
 	@Override
 	public List<Role> findAllRoles()
 	{
-		return entityManager.createNamedQuery("Role.findAll", Role.class).getResultList();
+		return getEntityManager().createNamedQuery("Role.findAll", Role.class).getResultList();
 	}
 
 	/* (non-Javadoc)
@@ -63,7 +63,7 @@ public class RoleDaoImpl implements RoleDao
 	@Override
 	public Role findById(Integer id)
 	{
-		return entityManager.find(Role.class, id);
+		return getEntityManager().find(Role.class, id);
 	}
 
 	/* (non-Javadoc)
@@ -73,20 +73,8 @@ public class RoleDaoImpl implements RoleDao
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRES_NEW)
 	public Role createRole(Role role)
 	{
-		try
-		{
-			entityManager.getTransaction().begin();
-			entityManager.persist(role);
-			entityManager.getTransaction().commit();
-			return role;
-		}
-		catch(Exception e)
-		{
-			entityManager.getTransaction().rollback();
-			e.printStackTrace();
-			entityManager.close();
-			return null;
-		}
+		getEntityManager().persist(role);
+		return role;
 	}
 
 	/* (non-Javadoc)
@@ -96,18 +84,7 @@ public class RoleDaoImpl implements RoleDao
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRES_NEW)
 	public void deleteRole(Integer id)
 	{
-		try
-		{
-			entityManager.getTransaction().begin();
-			entityManager.remove(findById(id));
-			entityManager.getTransaction().commit();
-		}
-		catch(Exception e)
-		{
-			entityManager.getTransaction().rollback();
-			e.printStackTrace();
-			entityManager.close();
-		}
+		getEntityManager().getTransaction().begin();
 	}
 
 	/* (non-Javadoc)
@@ -117,19 +94,7 @@ public class RoleDaoImpl implements RoleDao
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRES_NEW)
 	public Role updateRole(Role role)
 	{
-		try
-		{
-			entityManager.getTransaction().begin();
-			entityManager.merge(role);
-			entityManager.getTransaction().commit();
-			return role;
-		}
-		catch(Exception e)
-		{
-			entityManager.getTransaction().rollback();
-			e.printStackTrace();
-			entityManager.close();
-			return null;
-		}
+		getEntityManager().merge(role);
+		return role;
 	}
 }

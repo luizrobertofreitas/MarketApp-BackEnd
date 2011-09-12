@@ -52,6 +52,7 @@ public class UserDaoImpl implements UserDao
 	/* (non-Javadoc)
 	 * @see com.marketbe.model.dao.UserDao#findAllUsers()
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> findAllUsers()
 	{
@@ -97,5 +98,22 @@ public class UserDaoImpl implements UserDao
 	{
 		getEntityManager().merge(user);
 		return user;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.marketbe.model.dao.UserDao#findByUsername(java.lang.String)
+	 */
+	@Override
+	public User findByUsername(String username)
+	{
+		try
+		{
+			return getEntityManager().createNamedQuery("User.findByUsername", User.class).setParameter("username", username).getSingleResult();
+		}
+		catch(Exception e)
+		{
+			System.out.println(" >>>>>>>>>>>>>>> " + e.getMessage());
+			return null;
+		}
 	}
 }

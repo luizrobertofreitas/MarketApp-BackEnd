@@ -13,6 +13,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.marketbe.util.Constants;
+
 @Entity
 @Table(name="categories")
 @XmlRootElement
@@ -27,11 +29,11 @@ public class Category implements Serializable
 	@GeneratedValue	
 	private Integer id;
 	
-	@NotBlank
+	@NotBlank(message="Nome " + Constants.CANNOT_BE_BLANK)
 	@Column(name="name")
 	private String name;
 	
-	@NotBlank
+	@NotBlank(message="Descrição " + Constants.CANNOT_BE_BLANK)
 	@Column(name="description")
 	private String description;
 	

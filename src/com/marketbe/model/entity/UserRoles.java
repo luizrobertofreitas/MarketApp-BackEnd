@@ -9,11 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.validator.constraints.NotBlank;
+
+import com.marketbe.util.Constants;
 
 @Entity
 @Table(name="user_roles")
@@ -29,11 +29,11 @@ public class UserRoles implements Serializable
 	@GeneratedValue
 	private Integer id;
 	
-	@NotBlank
+	@NotBlank(message="Usuário " + Constants.CANNOT_BE_BLANK)
 	@Column(name="username")
 	private String username;
 	
-	@NotBlank
+	@NotBlank(message="Role " + Constants.CANNOT_BE_BLANK)
 	@Column(name="rolename")
 	private String rolename;
 	

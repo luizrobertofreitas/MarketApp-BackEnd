@@ -34,4 +34,10 @@ public interface UserDao
 	 * @return User
 	 */
 	public User updateUser(User user);
+	
+	/**
+	 * @param username
+	 * @return User
+	 */
+	public User findByUsername(String username);
 }
