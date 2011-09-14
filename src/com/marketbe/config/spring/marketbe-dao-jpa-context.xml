@@ -18,12 +18,18 @@
 	<context:annotation-config />
 
 	<tx:annotation-driven />
-
+	
+	<!-- Spring based data source -->
+	<!-- 
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
 				p:driverClassName="com.mysql.jdbc.Driver" 
 				p:url="jdbc:mysql://localhost:3306/market_app_java"
 				p:username="root" p:password="123456" />
-
+	-->
+	
+	<!-- Tomcat configured Datasource -->
+	<jee:jndi-lookup id="dataSource" jndi-name="jdbc/MarketDS"/>
+	
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
 				p:dataSource-ref="dataSource" p:jpaVendorAdapter-ref="jpaAdapter" />
 		

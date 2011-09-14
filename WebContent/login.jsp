@@ -6,12 +6,10 @@
 		<title>Market Application - BackEnd</title>
 	</head>
 	<body>
-		<form action="j_security_check" method="post">
-			<label>Usuário</label><input type="text" id="j_username" name="j_username" />
-			<label>Senha</label><input type="password" id="j_password" name="j_password" />
-			<input type="submit" value="Log in" />
-		</form>
-		<br />
-		<p>Erro: <strong>${params['erro']}</strong></p>
+		<br/>
+		<div align="center">
+			<h1>Área restrita, usuários não são permitidos efetuar login nesta página</h1>
+		</div>
+		<br/>
 	</body>
 </html>
